@@ -9,26 +9,79 @@ import TextContainer from './components/TextContainer';
 
 class App extends Component {
   // constructor
-
+  constructor(){
+    super();
+    this.state = {
+      fontColor: 'blue',
+      fontSize: 12,
+      fontFamily: 'monospace',
+      allowEdit: true
+    };
+    this.updateColor = this.updateColor.bind(this)
+    this.updateFamily = this.updateFamily.bind(this)
+    this.updateSize = this.updateSize.bind(this)
+    this.updateEditStatus = this.updateEditStatus.bind(this)
+  }
   // updateColor
-
+updateColor(val) {
+  console.log(val)
+  this.setState({fontColor: val})
+}
   // updateSize
 
   // updateFamily
+  updateFamily(val) {
+    console.log(val)
+    this.setState({fontFamily: val})
+  }
+
+
+  updateSize(val) {
+    this.setState({ fontSize: +(val)})
+  }
 
   // updateEditStatus
+  updateEditStatus(val) {
+    this.setState({allowEdit: val})
+  }
 
   render() {
+    console.log('this.state', this.state)
+
+    const { fontColor, fontSize, fontFamily, allowEdit } = this.state
+
     return (
       <div>
         <div className="headerBar">
-          { /* Render EditToggle */ }
-          { /* Render ColorChanger */ }
-          { /* Render SizeChanger */ }
-          { /* Render FamilyChanger */ }
+          <EditToggle allowEdit={allowEdit} update={this.updateEditStatus}/>
+
+          <ColorChanger 
+          fontColor={fontColor} 
+          update={this.updateColor} 
+          allowEdit={allowEdit}
+          />
+
+          <SizeChanger 
+          fontSize={fontSize}
+          update={this.updateSize}
+          allowEdit={allowEdit}
+          />
+
+         <FamilyChanger 
+         update={this.updateFamily}
+         fontFamily={fontFamily}
+         allowEdit={allowEdit}
+         />
         </div>
         <div className="textArea">
-          { /* Render TextContainer */ }
+          
+          <TextContainer 
+            fontColor={fontColor}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+          />
+
+
         </div>
       </div>
     )
